@@ -5,7 +5,7 @@ description = ""
 authors = ["kenjimaru <kendimaru2@gmail.com>"]
 maintainers = ["kenjimaru <kendimaru2@gmail.com>"]
 readme = 'README.rst'
-repository = ''
+repository = 'https://github.com/kendimaru/textfile'
 keywords = ['text', 'file', 'oneline', 'write', 'read']
 license = 'MIT'
 
