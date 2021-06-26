@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "textfile"
-version = "0.1.1"
+version = "0.1.2"
 description = "Functions that enables us to write out or read from with text file in shorter syntax."
 authors = ["kenjimaru <kendimaru2@gmail.com>"]
 maintainers = ["kenjimaru <kendimaru2@gmail.com>"]

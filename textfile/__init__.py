@@ -1,14 +1,14 @@
 from pathlib import Path
 
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 _ENCODING = 'utf-8'
 
 
 def write(file, s, overwrite=True):
-    """ Open file for write mode, write string into it, and close.
+    """ Open file for write mode, write string to it, then close.
 
-    Write string to a file in ``utf-8`` encoding.
+    Write string to file in ``utf-8`` encoding.
 
     If the file already exists, overwrite that by default,
     or FileExistsError if overwrite parameter set to False.
@@ -45,7 +45,40 @@ def write(file, s, overwrite=True):
 
 
 def append(file, s):
-    raise NotImplemented()
+    """ Open file for appending mode, write or append to it, then close.
+
+    Append string to file in ``utf-8`` encoding.
+
+    If the file not exists yet, the behavior is same to write() function.
+
+    Parameters
+    ----------
+    file: str or os.PathLike
+        File to append to.
+    s: str
+        A string to append to file.
+
+    Returns
+    -------
+    int
+        Character count that were written to file.
+
+    Raises
+    ------
+    PermissionError
+        Could not open or create file due to to permission problem.
+    IsADirectoryError
+        A value specified to file parameter was a directory.
+    TypeError
+        Illegal type of parameter specified.
+    """
+    file = Path(file)
+
+    if not file.exists():
+        write(file, s)
+
+    with open(file, 'a', encoding=_ENCODING) as appender:
+        appender.write(s)
 
 
 def prepend(file, s):
@@ -57,7 +90,7 @@ def insert(file, s, position):
 
 
 def read(file, silent=False):
-    """ Open file for read mode, read string from it, and close.
+    """ Open file for read mode, read string from it, then close.
 
     Read string from a file with the assumption that it is encoded in ``utf-8``.
 

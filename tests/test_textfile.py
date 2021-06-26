@@ -4,11 +4,12 @@ from pytest import fixture
 import pytest
 
 
+_ENCODING = 'utf-8'
 KENJIMARU = 'kenjimaru😃'
 
 
 def test_version():
-    assert __version__ == '0.1.1'
+    assert __version__ == '0.1.2'
 
 
 @fixture
@@ -69,6 +70,63 @@ class TestWriteFunction:
     def test_write_target_is_directory_should_is_a_directory_error(self, tmp_path):
         with pytest.raises(IsADirectoryError):
             textfile.write(tmp_path, KENJIMARU)
+
+
+class TestAppendFunction:
+    @fixture
+    def file_with_content(self, tmp_file):
+        with open(tmp_file, "w", encoding=_ENCODING) as writer:
+            writer.write(KENJIMARU)
+
+        return tmp_file
+
+    def test_pathlib_path(self, file_with_content):
+        textfile.append(file_with_content, KENJIMARU)
+        with open(file_with_content, encoding=_ENCODING) as reader:
+            assert reader.read() == KENJIMARU * 2
+
+    def test_path_string(self, file_with_content):
+        textfile.append(str(file_with_content), KENJIMARU)
+        with open(file_with_content, encoding=_ENCODING) as reader:
+            assert reader.read() == KENJIMARU * 2
+
+    def test_set_file_parameter_to_none_should_type_error(self):
+        with pytest.raises(TypeError):
+            textfile.append(None, KENJIMARU)
+
+    def test_set_s_parameter_to_none_should_type_error(self, file_with_content):
+        with pytest.raises(TypeError):
+            textfile.append(file_with_content, None)
+
+    def test_append_empty_string_should_not_vary_content(self, file_with_content):
+        textfile.append(file_with_content, '')
+        with open(file_with_content, encoding=_ENCODING) as reader:
+            assert reader.read() == KENJIMARU
+
+    def test_append_empty_string_to_nonexistence_file_should_create_empty_file(self, tmp_file):
+        textfile.append(tmp_file, '')
+        assert tmp_file.exists()
+        assert tmp_file.stat().st_size == 0
+
+    def test_append_to_nonexistent_directory_should_file_not_found_error(self, tmp_path):
+        p = tmp_path / 'not_exist' / 'tmp.txt'
+        with pytest.raises(FileNotFoundError):
+            textfile.append(p, KENJIMARU)
+
+    def test_create_file_in_not_permitted_dir_should_permission_error(self, tmp_path):
+        p = tmp_path / 'not_permitted'
+        p.mkdir(mode=0o444)
+        with pytest.raises(PermissionError):
+            textfile.append(p / 'tmp.txt', KENJIMARU)
+
+    def test_append_to_not_permitted_file_should_permission_error(self, file_with_content):
+        file_with_content.chmod(0o444)
+        with pytest.raises(PermissionError):
+            textfile.append(file_with_content, KENJIMARU)
+
+    def test_append_target_is_directory_should_is_a_directory_error(self, tmp_path):
+        with pytest.raises(IsADirectoryError):
+            textfile.append(tmp_path, KENJIMARU)
 
 
 class TestReadFunction:
