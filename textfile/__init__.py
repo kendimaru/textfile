@@ -1,7 +1,7 @@
 from pathlib import Path
 
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 _ENCODING = 'utf-8'
 
 
@@ -130,3 +130,33 @@ def read(file, silent=False):
 
     with open(file, encoding=_ENCODING) as reader:
         return reader.read()
+
+
+def replace(file, old, new):
+    """ Replace content in file.
+
+    Read entire content from file, replace old string to new one, then overwrite and close.
+
+    Parameters
+    ----------
+    file: str or os.PathLike
+        File its content to replace.
+    old: str
+        String to be replaced.
+    new: str
+        String to replace.
+
+    Raises
+    ------
+    FileNotFoundError
+        File is not exist.
+    PermissionError
+        Could not open or create file due to permission problem.
+    IsADirectoryError
+        A value specified to file parameter was a directory.
+    TypeError
+        Illegal type of parameter specified.
+    """
+    s = read(file)
+    s = s.replace(old, new)
+    write(file, s)

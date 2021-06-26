@@ -9,7 +9,7 @@ KENJIMARU = 'kenjimaru😃'
 
 
 def test_version():
-    assert __version__ == '0.1.2'
+    assert __version__ == '0.1.3'
 
 
 @fixture
@@ -162,5 +162,63 @@ class TestReadFunction:
         tmp_file.chmod(0o222)
         with pytest.raises(PermissionError):
             textfile.read(tmp_file)
+
+
+class TestReplace:
+    @fixture
+    def file_with_content(self, tmp_file):
+        content = KENJIMARU * 2
+        with open(tmp_file, 'w', encoding=_ENCODING) as writer:
+            writer.write(content)
+
+        return tmp_file
+
+    def test_pathlib_path(self, file_with_content):
+        textfile.replace(file_with_content, '😃', '🙃')
+        with open(file_with_content, encoding=_ENCODING) as reader:
+            assert reader.read() == 'kenjimaru🙃kenjimaru🙃'
+
+    def test_path_string(self, file_with_content):
+        textfile.replace(str(file_with_content), '😃', '🙃')
+        with open(file_with_content, encoding=_ENCODING) as reader:
+            assert reader.read() == 'kenjimaru🙃kenjimaru🙃'
+
+    def test_none_parameter_should_type_error(self, file_with_content):
+        with pytest.raises(TypeError):
+            textfile.replace(None, '😃', '🙃')
+
+        with pytest.raises(TypeError):
+            textfile.replace(file_with_content, None, '🙃')
+
+        with pytest.raises(TypeError):
+            textfile.replace(file_with_content, '😃', None)
+
+    def test_set_old_parameter_to_empty(self, file_with_content):
+        textfile.replace(file_with_content, '', '_')
+        with open(file_with_content, encoding=_ENCODING) as reader:
+            assert reader.read() == '_k_e_n_j_i_m_a_r_u_😃_k_e_n_j_i_m_a_r_u_😃_'
+
+    def test_set_new_parameter_to_empty(self, file_with_content):
+        textfile.replace(file_with_content, '😃', '')
+        with open(file_with_content, encoding=_ENCODING) as reader:
+            assert reader.read() == 'kenjimaru' * 2
+
+    def test_not_permitted_file_should_permission_error(self, file_with_content):
+        file_with_content.chmod(0o444)
+        with pytest.raises(PermissionError):
+            textfile.replace(file_with_content, '😃', '🙃')
+
+        file_with_content.chmod(0o222)
+        with pytest.raises(PermissionError):
+            textfile.replace(file_with_content, '😃', '🙃')
+
+    def test_target_is_directory_should_is_a_directory_error(self, tmp_path):
+        with pytest.raises(IsADirectoryError):
+            textfile.replace(tmp_path, '😃', '🙃')
+
+    def test_file_not_exist_should_file_not_found_error(self, tmp_path):
+        p = tmp_path / 'tmp.txt'
+        with pytest.raises(FileNotFoundError):
+            textfile.replace(p, '😃', '🙃')
 
 
