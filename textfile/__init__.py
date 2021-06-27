@@ -39,6 +39,15 @@ def write(file, s, overwrite=True):
         A value specified to file parameter was a directory.
     TypeError
         Illegal type of parameter specified.
+
+    Examples
+    --------
+
+    .. code-block:: python
+
+        textfile.write("a.txt", "any string value")
+
+    This code will write "any string value" to ``a.txt`` file.
     """
     with open(file, 'w', encoding=_ENCODING) as writer:
         writer.write(s)
@@ -71,6 +80,14 @@ def append(file, s):
         A value specified to file parameter was a directory.
     TypeError
         Illegal type of parameter specified.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        textfile.append("a.txt", "str to append")
+
+    This code will append "str to append" to the end of the content of ``a.txt`` file.
     """
     file = Path(file)
 
@@ -120,6 +137,14 @@ def read(file, silent=False):
         A value specified to file parameter was a directory.
     TypeError
         Illegal type of parameter specified.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        s = textfile.read("a.txt")
+
+    This code will read whole text from ``a.txt`` file.
     """
     file = Path(file)
     if not file.exists():
@@ -156,6 +181,28 @@ def replace(file, old, new):
         A value specified to file parameter was a directory.
     TypeError
         Illegal type of parameter specified.
+
+    Examples
+    --------
+    Assume a file ``a.csv`` that has the content in comma separated format, like below::
+
+        Id,Name,Age
+        1,Tom,30
+        2,Bob,26
+        3,Jane,28
+
+    And execute ``textfile.replace()`` function:
+
+    .. code-block:: python
+
+        textfile.replace("a.csv", ",", "\\t")
+
+    After that, the the content of a.csv will be::
+
+        Id\tName\tAge
+        1\tTom\t30
+        2\tBob\t26
+        3\tJane\t28
     """
     s = read(file)
     s = s.replace(old, new)

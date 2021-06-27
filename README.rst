@@ -5,20 +5,24 @@ than using only standard library.
 Install
 -------
 
-::
+.. code-block:: Shell
 
-    pip install textfile
+    > pip install textfile
 
 
 Usage
 -----
 
-Create file and write text to it::
+Create file and write text to it
+
+.. code-block:: python
 
     >>> import textfile
     >>> textfile.write("a.txt", "any string value")
 
-Read text from file::
+Read text from file
+
+.. code-block:: python
 
     >>> import textfile
     >>> textfile.read("a.txt")
@@ -29,12 +33,16 @@ The benefit to use textfile
 
 By using ``textfile``, it is possible to shorten your program on a specific situation.
 
-If you often write code like::
+If you often write code like
+
+.. code-block:: python
 
     with open("somefile.txt") as f:
         f.write("any string value")
 
-You can rewrite those codes to::
+You can rewrite those codes to
+
+.. code-block:: python
 
     textfile.write("somefile.txt", "any string value")
 
@@ -55,6 +63,6 @@ Is this document written in strange English?
 --------------------------------------------
 Kenjimaru, the author of this document, I am Japanese and am not familiar to English.
 
-So, if you read this document, and find anything to fix, feel free to contact me,
+If you read this document, and find anything should be fixed, feel free to contact me,
 and I will appreciate.
 
