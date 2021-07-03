@@ -1,6 +1,6 @@
 
-Functions that enables us to write out or read from with text file in shorter syntax
-than using only standard library.
+Wrapper functions of codes of text file operation that are very commonly seen.
+By using ``textfile``, readability of our program will be improve!
 
 Install
 -------
@@ -10,17 +10,17 @@ Install
     > pip install textfile
 
 
-Usage
------
+Very basic usage
+----------------
 
-Create file and write text to it
+Create file and write text to it.
 
 .. code-block:: python
 
     >>> import textfile
     >>> textfile.write("a.txt", "any string value")
 
-Read text from file
+Read text from text file.
 
 .. code-block:: python
 
@@ -28,36 +28,58 @@ Read text from file
     >>> textfile.read("a.txt")
     "any string value"
 
-The benefit to use textfile
----------------------------
+Use cases
+---------
 
-By using ``textfile``, it is possible to shorten your program on a specific situation.
-
-If you often write code like
-
-.. code-block:: python
-
-    with open("somefile.txt") as f:
-        f.write("any string value")
-
-You can rewrite those codes to
+Write string to text file:
 
 .. code-block:: python
 
     textfile.write("somefile.txt", "any string value")
 
-And other functions in ``textfile`` library are made of the same consept.
+Read entire string from text file:
 
-What situation does textfile fits?
-----------------------------------
+.. code-block::
 
-API that is simple to use, is less flexibility.
-It means that, it is not recommended to use in such a programs that is required speed or strictness.
+    textfile.read("somefile.txt")
 
-But I think that it will not be a matter in almost all situations of our programming.
+Replace string in text file:
+
+.. code-block::
+
+    textfile.replace("somefile.txt", "replaced", "replacement")
+
+Append string to text file:
+
+.. code-block::
+
+    textfile.append("somefile.txt", "text to append")
+
+Insert string to text file:
+
+.. code-block::
+
+    textfile.insert("somefile.txt", "text to insert", line=10)
+
+
+Just a implementation of facade pattern
+---------------------------------------
+
+``textfile`` wraps python algorithms that are very commonly used
+in the purpose of to more simplify basic operations.
+
+This is just a facade pattern.
+
+The side effect of simplify the interface of text file operation, gets less flexibility.
+Further more, it becomes hard to do speed tuning.
+
+But I think that those are not a matter in almost all situations of our programming.
+
+We should pay more attention to code readability!
 
 I courage you to use ``textfile`` as much as possible you can.
-If you do so, increase the readability of your code and suppress the bug.
+If you do so, the readability of your code will increase, and will suppress many bugs.
+
 
 Is this document written in strange English?
 --------------------------------------------

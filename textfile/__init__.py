@@ -1,7 +1,8 @@
 from pathlib import Path
+import re
 
 
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 _ENCODING = 'utf-8'
 
 
@@ -102,7 +103,81 @@ def prepend(file, s):
     raise NotImplemented()
 
 
-def insert(file, s, position):
+def insert(file, s, line):
+    """ Read content from file, and Write text inserted content to file.
+
+    This function does:
+
+    1. Read Content
+        * Open file in read mode.
+        * Read content.
+        * Close file.
+    2. Insert text
+        * insert s parameter text at line parameter position.
+    3. Write Content
+        * Open file in write mode.
+        * Write content.
+        * Close file.
+
+    Parameters
+    ----------
+    file: str or os.PathLike
+        File to operate.
+    s: str
+        Text to insert.
+    line: int
+        Line position.
+
+    Examples
+    --------
+
+    This is an example of insert csv file header line.
+
+    >>> textfile.read('a.csv')
+    1,Tom,53
+    2,Mike,55,
+    3,Bob,61
+    >>> textfile.insert('a.csv', 'Id,Name,Age\\n', 0)
+    >>> textfile.read('a.csv')
+    Id,Name,Age
+    1,Tom,53
+    2,Mike,55,
+    3,Bob,61
+
+    And line parameter can be set to negative value.
+    If do so, it will be regarded as line position from last of content.
+
+    >>> textfile.insert('a.csv', '\\n4,Jack,31', -1)
+    >>> textfile.read('a.csv')
+    Id,Name,Age
+    1,Tom,53
+    2,Mike,55,
+    3,Bob,61
+    4,Jack,31
+
+    """
+    file = Path(file)
+
+    lines = []
+    with open(file) as reader:
+        for l in reader:
+            lines.append(l)
+
+    if line == len(lines) or line == -1:
+        lines.append(s)
+    else:
+        if line < 0:
+            line += 1
+        lines[line] = s + lines[line]
+
+    file.write_text(''.join(lines))
+
+
+def head(file, lines):
+    raise NotImplemented()
+
+
+def tail(file, lines):
     raise NotImplemented()
 
 

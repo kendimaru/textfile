@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "textfile"
-version = "0.1.3"
+version = "0.1.4"
 description = "Functions that enables us to write out or read from with text file in shorter syntax."
 authors = ["kenjimaru <kendimaru2@gmail.com>"]
 maintainers = ["kenjimaru <kendimaru2@gmail.com>"]
 readme = 'README.rst'
 repository = 'https://github.com/kendimaru/textfile'
+homepage = 'https://jimaru.site/textfile/'
 keywords = ['text', 'file', 'oneline', 'write', 'read']
 license = 'MIT'
 
