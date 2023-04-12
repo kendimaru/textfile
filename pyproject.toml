@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "textfile"
-version = "0.1.4"
+version = "0.1.5"
 description = "Functions that enables us to write out or read from with text file in shorter syntax."
 authors = ["kenjimaru <kendimaru2@gmail.com>"]
 maintainers = ["kenjimaru <kendimaru2@gmail.com>"]
@@ -16,13 +16,16 @@ classifiers=[
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
 ]
 
 [tool.poetry.dependencies]
 python = "^3.7"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^7.3.0"
 Sphinx = "^4.0.2"
 
 [build-system]
