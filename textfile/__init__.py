@@ -94,9 +94,9 @@ def append(file, s):
 
     if not file.exists():
         write(file, s)
-
-    with open(file, 'a', encoding=_ENCODING) as appender:
-        appender.write(s)
+    else:
+        with open(file, 'a', encoding=_ENCODING) as appender:
+            appender.write(s)
 
 
 def prepend(file, s):

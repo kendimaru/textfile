@@ -91,6 +91,14 @@ class TestAppendFunction:
         with open(file_with_content, encoding=_ENCODING) as reader:
             assert reader.read() == KENJIMARU * 2
 
+    def test_file_creation(self, tmp_file):
+        textfile.append(tmp_file, KENJIMARU)
+
+        with open(tmp_file, encoding='utf-8') as reader:
+            written = reader.read()
+
+        assert written == KENJIMARU
+
     def test_set_file_parameter_to_none_should_type_error(self):
         with pytest.raises(TypeError):
             textfile.append(None, KENJIMARU)
