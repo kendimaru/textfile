@@ -1,6 +1,11 @@
+textfile
+========
 
 Wrapper functions of codes of text file operation that are very commonly seen.
 By using ``textfile``, readability of our program will be improve!
+
+.. image:: https://img.shields.io/badge/License-MIT-yellow.svg
+   :alt: License: MIT
 
 Install
 -------
